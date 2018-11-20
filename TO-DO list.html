@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<title>Project TO-DO list</title>
+</head>
+<body>
+<div ng-app="app" ng-controller="ctrl">
+     <h1>Todo List</h1>
+     {{m}} of {{x}} remaining<br>
+     <a href="" ng-click="fn()">Archive Complete Task</a><br><br>
+     Search:<input type="text" ng-model="task" placeholder="Search a task"><br>
+    <div ng-repeat="x in lists|filter:task">
+    <ul>
+    <li><input type="checkbox" ng-model="x.check" ng-click="check1()">
+    {{x.task}}</li>
+    </ul>
+    </div>
+    <input type="text" ng-model="input1" placeholder="Add new task" ng-required="input1">
+    <input type="button" value="ADD" ng-click="add()">
+</div>
+<script>
+    var v1 =angular.module("app",[])
+    v1.controller("ctrl",function($scope){
+    $scope.lists=[];
+    var obj1={task:"class tomorrow at 6 PM",check:false};
+    var obj2={task:"Start the project Todo App",check:false};
+    var obj3={task:"Finish Previous Assignment", check:false};
+    var obj4={task:"Watch the lesson of filter again",check:false};
+    var obj5={task:"Set the alaram for 5:30 am",check:false};
+    $scope.lists.push(obj1);
+    $scope.lists.push(obj2);
+    $scope.lists.push(obj3);
+    $scope.lists.push(obj4);
+    $scope.lists.push(obj5);
+    $scope.x=$scope.lists.length;
+    $scope.m=$scope.lists.length;
+      $scope.add=function(){
+           var obj6={task:$scope.input1,check:false};
+           $scope.lists.push(obj6)
+           $scope.input1="";
+           $scope.m++;
+           $scope.x++;
+       }
+      $scope.fn=function(){
+        var oldlist=$scope.lists;
+        $scope.lists=[];
+        angular.forEach(oldlist,function(st){
+        if(!st.check){
+            $scope.lists.push(st);
+        }
+        $scope.m=$scope.lists.length;
+        $scope.x=$scope.lists.length;
+        })
+      }
+    $scope.check1=function(){
+     $scope.m=$scope.lists.length;
+     angular.forEach($scope.lists,function(st){
+     if(st.check==true){
+       $scope.m--;
+    }
+    })
+    }
+})
+</script>
+</body>
+</html>
